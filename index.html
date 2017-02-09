@@ -1,0 +1,3172 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>淘小微</title>
+		<style>
+			
+body {
+   /* //background: none repeat scroll 0 0 #FFFFFF;*/
+	background-image: url('images/body_background.png');
+    /*color: #333333;*/
+    font: 1em/1.4 Cambria,Georgia,sans-serif;
+    padding: 0;
+	margin: 0;
+	/*top:10;*/
+	width:95%;			 
+	text-align:left; 
+}
+
+#container {
+    margin: 0 auto;
+    padding: 0 0 50px;
+    width: 500px;
+}
+
+p{
+    margin: 1em 0;
+}
+.content h2 {
+    font-size: 2em;
+    font-style: normal;
+    font-weight: bold;
+    margin: 2em 0 0.75em;
+    text-align: left;
+}
+blockquote {
+    margin: 1em 0;
+}
+blockquote p {
+    font-size: 2em;
+    margin: 0;
+}
+.follow {
+    clear: both;
+    font-size: 1.125em;
+    margin-top: 2em;
+}
+.follow span {
+    font-weight: bold;
+}
+.content {
+    position: relative;
+    z-index: 1;
+}
+.triangle-isosceles2 {
+	background-color : rgba(28,175,201,0.8);	
+
+    border-radius: 10px 10px 10px 10px;
+    color: #000000;
+    margin: 1em 0 3em;
+    padding: 15px;
+    //position: relative;
+	position : absolute;
+	left : -2000px;
+	top : -1800px;
+	z-index : 1;
+	font-size : 14px;
+}
+	
+.triangle-isosceles2.top {
+	position : absolute;
+	left : -2000px;
+	top : -1800px;
+	z-index : 1;
+	font-size : 14px;
+}
+
+.triangle-isosceles2:after {
+    border-color: rgba(28,175,201,0.8) transparent;
+    border-style: solid;
+    border-width: 15px 15px 0;
+    bottom: -15px;
+    content: "";
+    display: block;
+    left: 100px;
+    position: absolute;
+    width: 0;
+}
+.triangle-isosceles2.top:after {
+    border-color: rgba(28,175,201,0.8) transparent;
+    border-width: 0 15px 15px;
+    bottom: auto;
+    left: auto;
+    right: 100px;
+    top: -15px;
+}
+
+.triangle-isosceles {
+	background-color : rgba(112,101,127,0.8);	
+
+    border-radius: 10px 10px 10px 10px;
+    color: #000000;
+    margin: 1em 0 3em;
+    padding: 15px;
+    //position: relative;
+	position : absolute;
+	left : -2000px;
+	top : -1800px;
+	z-index : 1;
+	font-size : 14px;
+}
+	
+.triangle-isosceles.top {
+	position : absolute;
+	left : -2000px;
+	top : -1800px;
+	z-index : 1;
+	font-size : 14px;
+}
+
+.triangle-isosceles:after {
+    border-color:  rgba(112,101,127,0.8) transparent;
+    border-style: solid;
+    border-width: 15px 15px 0;
+    bottom: -15px;
+    content: "";
+    display: block;
+    left: 100px;
+    position: absolute;
+    width: 0;
+}
+.triangle-isosceles.top:after {
+    border-color: rgba(112,101,127,0.8) transparent;
+    border-width: 0 15px 15px;
+    bottom: auto;
+    left: auto;
+    right: 100px;
+    top: -15px;
+}
+
+a:link {color: #FFFFFF}
+a:visited {color: #FFCCCC}
+a:hover {color: #f86f61}
+
+#canvasOne{
+border-style:solid;
+border-color:#E6ED4A;
+border-width:1px;
+position:absolute;
+left: 0px;
+top: 0px;
+margin: 0 auto;
+}
+
+#a,#b,#c,#d{
+    display:block;
+    width:78px;
+	height:90px;
+	top:620px;
+    margin:5px auto;
+    text-indent:-999em;
+    background:url("images/changeBrowser.png") no-repeat;
+	position: absolute;
+}
+#a{
+	left: 550px;
+    background-position:-550px -620px;
+}
+#b{
+	left: 633px;
+    background-position:-633px -620px;
+}
+#c{
+	left: 716px;
+    background-position:-716px -620px;
+}
+#d{
+	left: 799px;
+    background-position:-799px -620px;
+}
+		</style>
+	</head>
+	<body>
+		<div id="floatBox" class="triangle-isosceles top" style="width : 300px; height : 60px;">  
+			<div id="floatWord" style="top: 0px; padding : 0px; margin: 0px; width: 270px;"></div>
+			<button id="refresh" type="submit" style="position: relative; border: 0; background: transparent; left: 0px; top: -30px; padding:0px; margin:0px; float: right; "  onclick="closeFloat()" title="关闭">
+				<img src="images/close.png" width="15" heght="15" alt="submit" />
+			</button>
+		</div>
+
+		<div id="canvasDiv" style=" margin-left: auto; margin-right: auto; height:768px; width=1024px;">
+			<canvas id="canvasOne" width=1024 height=768>
+			
+			</canvas>
+		</div>
+		
+		<script type="text/javascript"  src="modernizr-1.6.min.js"></script>
+		<script type="text/javascript"  src="ui.js"></script>
+		<script type="text/javascript"  src="drip.js"></script>	
+		<script type="text/javascript"  src="wave.js"></script>	
+		<script type="text/javascript">
+
+function closeFloat(){
+	floatBox=document.getElementById("floatBox");
+	floatBox.style.visibility='hidden';
+}
+
+//window.addEventListener('load', eventWindowLoaded, false);	
+window.onload=eventWindowLoaded;
+
+//adjust canvas location
+var canvas_element = document.getElementById("canvasOne");
+var canvas_left= window.screen.width/2-canvas_element.width/2;
+if(canvas_left<0){canvas_left=0;}
+canvas_element.style.left= canvas_left+'px';
+
+
+
+/* Create a new XMLHttpRequest object to talk to the Web server */
+var xmlHttp = false;
+try {
+  xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+} catch (e) {
+  try {
+    xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+  } catch (e2) {
+    xmlHttp = false;
+  }
+}
+if (!xmlHttp && typeof XMLHttpRequest != 'undefined') {
+  xmlHttp = new XMLHttpRequest();
+}
+
+function eventWindowLoaded() {
+	canvasApp();
+}
+
+function canvasSupport () {
+	return Modernizr.canvas;
+}
+
+function canvasApp() {
+	if (!canvasSupport()) {
+		//adjust canvas replace location
+		var canvasDiv = document.getElementById("canvasDiv");
+		var canvasDiv_left= window.screen.width/2-512;
+		if(canvasDiv_left<0){canvasDiv_left=0;}
+		canvasDiv.style.left=canvasDiv_left+'px';
+
+		canvasDiv.style.position = 'relative';
+		canvasDiv.innerHTML="<img src=\"images/changeBrowser.png\"\/>  <a id=\"a\" target=\"blank\" href=\"https://www.google.com/chrome\">Chrome</a>  <a id=\"b\" target=\"blank\" href=\"http://www.firefox.com\">Firefox</a>  <a id=\"c\" target=\"blank\" href=\"http://www.apple.com/safari/\">Safari</a>  <a id=\"d\" target=\"blank\" href=\"http://www.opera.com\">Opera</a>";
+		return;
+	}
+
+	var STATE_INIT	= 1;
+	var STATE_LOADING	= 2;
+	var STATE_RESET 	= 3;
+	var STATE_PLAYING = 4;
+	var appState = STATE_INIT;
+
+	var LOAD_STATE1 =1000;
+	var LOAD_STATE2 =2000;
+	var LOAD_STATE3 =3000;
+	var LOAD_STATE4 =4000;
+	var LOAD_STATE5 =5000;
+	var loadState = LOAD_STATE1;
+
+
+
+	var STAGE_WEIBO 	=10;
+	var STAGE_TAOBAO 	=20;
+	var STAGE_BUY 	=30;
+	var STAGE_SHARE 	=40;
+
+	var PLAY_NORMAL 	=100;
+	var PLAY_AMPLIFY 	=200;
+
+	var playStage = STAGE_WEIBO;
+	var playState = PLAY_NORMAL;
+
+	var fps=30;
+	var frameCount=0;
+
+	var loadCount;
+	var itemsToLoad;
+	var initLoadCount;
+	var initItemsToLoad;
+
+	var mouse={
+			x:-1000,
+			y:-1000,
+			r:30,
+		}
+	var bigDrip = undefined;
+	var amplifyDrip = undefined;
+
+	var weiboSum =10680;
+	var peopleSum =197438;
+	var weiboTotal =500;
+	var peopleTotal =600;
+	var ratioText='';
+	var numText='';
+
+  	var theCanvas = document.getElementById("canvasOne");
+	var context = theCanvas.getContext("2d");
+	var tempCanvas = document.createElement("canvas");
+	var tempContext = tempCanvas.getContext("2d");
+	tempCanvas.width = theCanvas.width;
+	tempCanvas.height = theCanvas.height;
+
+	var waveQueue = new WaveQueue();
+
+	var stagePosition=[{x:2092,y:147},
+					{x:1496,y:745},
+					{x:890,y:1364},
+					{x:287,y:1966}
+	];
+	var destination={x:2092,y:147};
+	var stageMoveVelocity={x:0,y:0};
+	var bgImagePosition={x:2092,y:147};
+	var stageChangeFrames=40;
+
+	function setStageMove(toStage){
+		var stageIdx=Math.floor(toStage/10)-1;
+		destination=stagePosition[stageIdx];
+		stageMoveVelocity.x=(destination.x-bgImagePosition.x)/stageChangeFrames;
+		stageMoveVelocity.y=(destination.y-bgImagePosition.y)/stageChangeFrames;
+	}
+
+	var json={};
+	var showCondition="{\"stage\":1,\"split\" : \"链接点击量\"}";
+	var showResult="{stage:1,total:10680,sum:10680,split: { name:\"链接点击量\",type : [{num:4911},{num:1800},{num:1204},{num:427},{num:2338}]}}";
+	//var showCondition="{\"stage\":1,\"split\" : \"商品类目\"}";
+	//var showResult="{stage:1,total:10680,sum:10680,split: { name:'商品类目',type : [{num:6},{num:4},{num:1},{num:2},{num:83},{num:3318},{num:234},{num:266},{num:325},{num:54},{num:1134},{num:385},{num:61},{num:444},{num:37},{num:918},{num:46},{num:5},{num:2},{num:5},{num:1},{num:3},{num:22},{num:74},{num:4},{num:3},{num:1},{num:25},{num:10},{num:2},{num:56},{num:0},{num:41},{num:3},{num:47},{num:474},{num:339},{num:53},{num:55},{num:15},{num:28},{num:4},{num:170},{num:41},{num:138},{num:84},{num:35},{num:1},{num:219},{num:3},{num:22},{num:3},{num:1},{num:7},{num:61},{num:165},{num:44},{num:57},{num:13},{num:35},{num:0},{num:70},{num:23},{num:20},{num:16},{num:469},{num:102},{num:7},{num:8},{num:119},{num:22},{num:61},{num:12},{num:25},{num:24},{num:2},{num:11}]}} ";
+
+		//"{stage: 2, total: 200, sum : 200, split : {name: '博主身份', type: [ {num : 125}, {num : 50}, {num : 18}, {num : 7}, ] } }";
+
+		//"{stage: 1, total: 200, sum : 200, split : {name: '链接点击量', type: [ {num : 125}, {num : 50}, {num : 18}, {num : 2},{num : 5}, ] } }";
+
+
+	var dataSelectorType={
+'性别' : 'selector',		
+'年龄' : 'slider',
+'星座' : 'table',
+'地域' : 'table',
+'淘宝用户标签' : 'table',
+'淘宝买家级别' : 'slider',
+'淘宝消费能力' : 'slider',
+'微博用户标签' : 'table',
+'微博影响力' : 'slider',
+
+'商品价格档次' : 'slider',
+'商品类目' : 'tree',
+'店铺级别' : 'slider',
+'商品需求度' : 'slider',
+
+'链接点击量' : 'slider',
+'博主身份' : 'selector',
+'博主影响力' : 'slider',
+'日发微博数' : 'slider',
+'点击时间' : 'slider',
+
+'成交转化率' : 'slider',
+	}
+
+	var data={
+		'成交转化率' : [
+		{type : '高'},
+		{type : '低'},
+		{type : '无'},
+		],
+
+		'商品价格档次' : [
+		{type : '白菜价'},
+		{type : '便宜'},
+		{type : '差不多'},
+		{type : '贵！'},
+		{type : '死贵！'},
+		],
+	
+		'商品类目' : [
+		{type : '虚拟票务', child : [
+			{type : '手机号码业务'},
+			{type : '网游周边业务'},
+			{type : '网游点卡'},
+			{type : '话费充值'},
+			]},
+		{type : '服饰鞋类', child : [
+			{type : '运动鞋new'},
+			{type : '女装/女士精品'},
+			{type : '男女内衣'},
+			{type : '童装童鞋'},
+			{type : '男装'},
+			{type : '流行男鞋'},
+			{type : '女鞋'},
+			]},
+		{type : '箱包/配饰', child : [
+			{type : '服饰配件'},
+			{type : '手表'},
+			{type : '饰品'},
+			{type : '珠宝'},
+			{type : '箱包皮具'},
+			{type : '烟具/刀具/眼镜'},
+			]},
+		{type : '数码家电', child : [
+			{type : '大家电'},
+			{type : '笔记本电脑'},
+			{type : '生活电器'},
+			{type : '服务器'},
+			{type : '办公耗材/服务'},
+			{type : '电脑硬件'},
+			{type : '相机/摄像机'},
+			{type : '平板电脑'},
+			{type : '电子凭证'},
+			{type : '国货精品数码'},
+			{type : '影音电器'},
+			{type : '存储卡盘'},
+			{type : '随身听'},
+			{type : '电子词典'},
+			{type : '3C配件'},
+			{type : '手机'},
+			{type : '网络设备'},
+			]},
+		{type : '美容护发', child : [
+			{type : '美发护发/假发'},
+			{type : '美容护肤'},
+			{type : '美妆工具'},
+			{type : '洗护沐浴'},
+			]},
+		{type : '母婴用品', child : [
+			{type : '婴儿用品'},
+			{type : '奶粉/营养品'},
+			{type : '孕妇用品'},
+			]},
+		{type : '家居建材', child : [
+			{type : '特色手工艺'},
+			{type : '床上用品'},
+			{type : '住宅家具'},
+			{type : '居家日用'},
+			{type : '厨房/餐饮用具'},
+			{type : '家装主材'},
+			{type : '五金/工具'},
+			{type : '家居饰品'},
+			{type : '商业/办公家具'},
+			{type : '厨房电器'},
+			{type : '电子/电工'},
+			{type : '基础建材'},
+			]},
+		{type : '食品百货', child : [
+			{type : '品牌保健品'},
+			{type : '粮油蔬果干货'},
+			{type : '零食/茶叶/特产'},
+			{type : '滋补保健营养品'},
+			{type : '宠物/宠物用品'},
+			{type : '个人护理/按摩器'},
+			]},
+		{type : '运动户外', child : [
+			{type : '户外旅行用品'},
+			{type : '运动服饰/配件'},
+			{type : '健身/球迷用品'},
+			]},
+		{type : '汽车用品', child : [
+			{type : '汽车/摩托/配件'},
+			]},
+		{type : '文娱爱好', child : [
+			{type : '影音/明星'},
+			{type : '花卉园艺/速递'},
+			{type : '玩具/动漫/益智'},
+			{type : '书籍/杂志/报纸'},
+			{type : '乐器/配件'},
+			{type : '电玩/配件/攻略'},
+			{type : '收藏/古董'},
+			{type : '成人用品'},
+			{type : '个性定制/设计'},
+			]},
+		{type : '生活服务', child : [
+			{type : '旅游/门票/酒店'},
+			{type : '网店服务'},
+			{type : '电影/演出赛事'},
+			{type : '吃喝玩乐折扣券'},
+			{type : '本地化生活服务'},
+			]},
+		],
+		'店铺级别' : [
+		{type : '新手卖家'},
+		{type : '普通卖家'},
+		{type : '大卖家'},
+		{type : '老江湖'},
+		],	
+
+		'商品需求度' : [
+		{type : '随便看看'},
+		{type : '潜在需求'},
+		{type : '很感兴趣'},
+		{type : '非常需要'},
+		],
+		'链接点击量' : [
+		{type : '1-10次点击'},
+		{type : '11-50次点击'},
+		{type : '50-300次点击'},
+		{type : '301-1000次点击'},
+		{type : '1000-3000次点击'},
+		],
+		'博主身份' : [
+		{type : '淘宝官方'},
+		{type : '普通微博用户'},
+		{type : '卖家'},
+		{type : '营销'},
+		],
+		'博主影响力' : [
+		{type : '五星'},
+		{type : '四星'},
+		{type : '三星'},
+		{type : '两星'},
+		{type : '一星'},
+		],
+		'日发微博数' : [
+		{type : '1-5条'},
+		{type : '6-10条'},
+		{type : '11-50条'},
+		{type : '>50条'},
+		],
+		'点击时间' : [
+		{type : '0:00-3:00'},
+		{type : '3:00-6:00'},
+		{type : '6:00-9:00'},
+		{type : '9:00-12:00'},
+		{type : '12:00-15:00'},
+		{type : '15:00-18:00'},
+		{type : '18:00-21:00'},
+		{type : '21:00-24:00'},
+		],
+
+/*
+商品价格档次	5	白菜价；便宜；差不多；贵！；死贵！
+所属类目	12	见浅夏“排排坐”
+店铺级别	4	新手卖家；普通卖家；大卖家；老江湖
+商品需求度	4	随便看看；潜在需求；很感兴趣；非常需要
+链接点击量	5	1-10；11-50；50-300；301-1000；1000-3000
+博主身份	4	淘宝官方；普通；卖家；营销
+博主影响力	5	星级表示
+日发微博数	4	1-5；6-10；11-50；>50
+点击时间	24	0-23
+*/
+
+		'性别' : [
+		{type : '男'},
+		{type : '女'},
+		{type : '未知'},
+		],
+		'年龄' : [
+		{type : '<18'},
+		{type : '18-25'},
+		{type : '26-30'},
+		{type : '31-40'},
+		{type : '41-60'},
+		{type : '>60'},
+		{type : '未知'},
+		],
+		'星座' : [
+		{type : '白羊座'},
+		{type : '金牛座'},
+		{type : '双子座'},
+		{type : '巨蟹座'},
+		{type : '狮子座'},
+		{type : '处女座'},
+		{type : '天秤座'},
+		{type : '天蝎座'},
+		{type : '射手座'},
+		{type : '摩羯座'},
+		{type : '水瓶座'},
+		{type : '双鱼座'},
+		{type : '未知'},
+		],
+		'地域' : [
+		{type : '北京'},
+		{type : '天津'},
+		{type : '上海'},
+		{type : '重庆'},
+		{type : '河北'},
+		{type : '山西'},
+		{type : '陕西'},
+		{type : '山东'},
+		{type : '河南'},
+		{type : '辽宁'},
+		{type : '吉林'},
+		{type : '黑龙江'},
+		{type : '江苏'},
+		{type : '浙江'},
+		{type : '安徽'},
+		{type : '江西'},
+		{type : '福建'},
+		{type : '湖北'},
+		{type : '湖南'},
+		{type : '四川'},
+		{type : '贵州'},
+		{type : '云南'},
+		{type : '广东'},
+		{type : '海南'},
+		{type : '甘肃'},
+		{type : '青海'},
+		{type : '台湾'},
+		{type : '内蒙古'},
+		{type : '新疆'},
+		{type : '西藏'},
+		{type : '广西'},
+		{type : '宁夏'},
+		{type : '香港'},
+		{type : '澳门'},
+		{type : '海外'},
+		{type : '未知'},
+		],
+		'淘宝用户标签' : [
+		{type :	'收藏'},
+		{type :	'宠物'},
+		{type :	'零食'},
+		{type :	'摄影'},
+		{type :	'数码'},
+		{type :	'花卉'},
+		{type :	'运动'},
+		{type :	'果粉'},
+		{type :	'魅力'},
+		{type :	'美女'},
+		{type :	'主妇'},
+		{type :	'育儿'},
+		{type :	'旅行'},
+		{type :	'未知'},
+		],
+		'淘宝买家级别' : [
+		{type :	'新手买家'},
+		{type : '初级买家'},
+		{type : '中级买家'},
+		{type : '资深买家'},
+		{type : '骨灰级买家'},
+		],
+		'淘宝消费能力' : [
+		{type : '低'},
+		{type : '偏低'},
+		{type : '中'},
+		{type : '偏高'},
+		{type : '高'},
+		{type : '未知'},
+		],
+		'微博用户标签' : [
+		{type : '音乐'},
+		{type : '娱乐影视'},
+		{type : '经济'},
+		{type : '居家生活'},
+		{type : '教育'},
+		{type : '美容购物'},
+		{type : '文艺'},
+		{type : '互联网'},
+		{type : '传媒'},
+		{type : '汽车/数码'},
+		{type : '体育'},
+		{type : '星座两性'},
+		{type : '餐饮'},
+		{type : '游戏动漫'},
+		{type : '其他'},
+		],
+
+		'微博影响力' : [
+		{type : '五星'},
+		{type : '四星'},
+		{type : '三星'},
+		{type : '两星'},
+		{type : '一星'},
+		],
+/*
+性别	3	男；女；未知
+年龄	7	<18;18-25;26-30;30-40;41-60;>60;未知
+星座	12	略
+地域	36	34个行政省+海外＋未知
+淘宝标签	14	13个标签+未知
+买家等级	5	新手买家；初级买家；中级买家；资深买家；骨灰级买家
+消费能力	5	低；偏低；中等；偏高；高
+新浪标签	15	14个标签+其他
+微博影响力	5	星级表示
+*/
+	};
+/*
+
+var dataSelectorType={
+'性别' : 'selector',		
+'年龄' : 'slider',
+'星座' : 'table',
+'地域' : 'table',
+'淘宝标签' : 'table',
+'买家等级' : 'slider',
+'消费能力' : 'slider',
+'新浪标签' : 'table',
+'微博影响力' : 'slider',
+'商品价格档次' : 'slider',
+'所属类目' : 'tree',
+'店铺级别' : 'slider',
+'商品需求度' : 'slider',
+'链接点击量' : 'slider',
+'博主身份' : 'selector',
+'博主影响力' : 'slider',
+'日发微博数' : 'slider',
+'点击时间' : 'slider',
+	}
+*/
+
+
+	var conditionList=[showCondition];
+	conditionList.result=[showResult];
+	conditionList.idx=0;
+	//conditionList.resultIdx=0;
+	conditionList.get = function(){
+		return this[this.idx];
+	}
+	conditionList.getResult = function(){
+		return this.result[this.idx];
+	}
+	conditionList.isAdding = function(){
+		if(this.length === this.result.length +1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	conditionList.addCondition = function(newCondition){
+		if(this.isAdding()){
+			this[this.idx]=newCondition;
+		}else{
+			this.idx++;
+			this[this.idx]=newCondition;
+			if(this.idx < this.length -1){
+				this.splice(this.idx+1,this.length-this.idx-1);
+			}
+			if(this.idx -1 < this.result.length -1){
+				this.result.splice(this.idx,this.length-this.idx);
+			}
+		}
+	}
+
+	conditionList.addResult = function(newResult){
+		if(this.isAdding()){
+			this.result[this.result.length]=newResult;
+		}
+	}	
+	conditionList.canGoBack = function(){
+		if(this.idx > 0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	conditionList.goBack = function(){
+		if(this.canGoBack()){
+			this.idx--;
+			//showCondition=this[this.idx];
+			if(this.isAdding() === true){
+				// delete last condition which has no result
+				this.splice(this.length-1,1);	
+			}
+		}else{
+			alert('can not go back');
+		}
+	}
+	conditionList.canGoForward = function(){
+		if(this.idx < this.length-1){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	conditionList.goForward = function(){
+		if(this.canGoForward()){
+			this.idx++;
+			//showCondition=this[this.idx];
+		}else{
+			alert('can not go forward');
+		}
+	}
+
+	var b1_bottom = new CircleButton({
+			id : 'b1_bottom ',
+			canvas : theCanvas,
+			x : 235,
+			y : 580,
+			r : 54,
+			state : 'enabled',
+			});
+	b1_bottom.clickCallBack = function(){
+		playStage = STAGE_TAOBAO;
+		//setButtonState();
+	}
+	b1_bottom.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(stage1_bottom_hover,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(stage1_bottom,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b2_top=new CircleButton({
+			id : 'b2_top',
+			canvas : theCanvas,
+			x : 780,
+			y : 62,
+			r : 54,
+			state : 'unable',
+			});
+	b2_top.clickCallBack = function(){
+		playStage = STAGE_WEIBO;
+		//setButtonState();
+	}
+	b2_top.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(stage2_top_hover,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(stage2_top,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b2_bottom = new CircleButton({
+			id : 'b2_bottom',
+			canvas : theCanvas,
+			x : 235,
+			y : 580,
+			r : 54,
+			state : 'unable',
+			});
+	b2_bottom.clickCallBack = function(){
+		playStage = STAGE_BUY;
+		//setButtonState();
+	}
+	b2_bottom.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(stage2_bottom_hover,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(stage2_bottom,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b3_top=new CircleButton({
+			id : 'b3_top',
+			canvas : theCanvas,
+			x : 780,
+			y : 62,
+			r : 54,
+			state : 'unable',
+		});
+	b3_top.clickCallBack = function(){
+		playStage = STAGE_TAOBAO;
+		//setButtonState();
+	}
+	b3_top.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(stage3_top_hover,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(stage3_top,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b3_bottom = new CircleButton({
+			id : 'b3_bottom',
+			canvas : theCanvas,
+			x : 235,
+			y : 580,
+			r : 54,
+			state : 'unable',
+		});
+	b3_bottom.clickCallBack = function(){
+		playStage = STAGE_SHARE;
+		//setButtonState();
+	}
+	b3_bottom.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(stage3_bottom_hover,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(stage3_bottom,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b4_top=new CircleButton({
+			id : 'b4_top',
+			canvas : theCanvas,
+			x : 780,
+			y : 62,
+			r : 54,
+			state : 'unable',
+			});
+	b4_top.clickCallBack = function(){
+		playStage = STAGE_BUY;
+		//setButtonState();
+	}
+	b4_top.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(stage4_top_hover,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(stage4_top,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b1_topright=new CircleButton({
+			id : 'b1_topright',
+			canvas : theCanvas,
+			x : 993,
+			y : 31,
+			r : 15.5,
+			state : 'unable',
+			});
+	b1_topright.clickCallBack = function(){
+		playStage = STAGE_WEIBO;
+	}
+	b1_topright.unableDraw =function(){
+		var c= this.ctx;
+		c.drawImage(naviClickedImg,this.x-this.r,this.y-this.r);
+	};
+	b1_topright.enabledDraw = function(){
+		var c= this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(naviHoverImg,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(navi1Img,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b2_topright=new CircleButton({
+			id : 'b2_topright',
+			canvas : theCanvas,
+			x : 993,
+			y : 76,
+			r : 15.5,
+			state : 'unable',
+			});
+	b2_topright.clickCallBack = function(){
+		playStage = STAGE_TAOBAO;
+	}
+	b2_topright.unableDraw =function(){
+		var c= this.ctx;
+		c.drawImage(naviClickedImg,this.x-this.r,this.y-this.r);
+	};
+	b2_topright.enabledDraw = function(){
+		var c= this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(naviHoverImg,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(navi234Img,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b3_topright=new CircleButton({
+			id : 'b3_topright',
+			canvas : theCanvas,
+			x : 993,
+			y : 121,
+			r : 15.5,
+			state : 'unable',
+			});
+	b3_topright.clickCallBack = function(){
+		playStage = STAGE_BUY;
+		//setButtonState();
+	}
+	b3_topright.unableDraw =function(){
+		var c= this.ctx;
+		c.drawImage(naviClickedImg,this.x-this.r,this.y-this.r);
+	};
+	b3_topright.enabledDraw = function(){
+		var c= this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(naviHoverImg,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(navi234Img,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	var b4_topright=new CircleButton({
+			id : 'b4_topright',
+			canvas : theCanvas,
+			x : 993,
+			y : 166,
+			r : 15.5,
+			state : 'unable',
+			});
+	b4_topright.clickCallBack = function(){
+		playStage = STAGE_SHARE;
+		//setButtonState();
+	}
+	b4_topright.unableDraw =function(){
+		var c= this.ctx;
+		c.drawImage(naviClickedImg,this.x-this.r,this.y-this.r);
+	};
+	b4_topright.enabledDraw = function(){
+		var c= this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(naviHoverImg,this.x-this.r,this.y-this.r);
+		}else{
+			c.drawImage(navi234Img,this.x-this.r,this.y-this.r);
+		}
+	}
+
+	backButton = new RectangleButton({
+			id : 'back',
+			canvas : theCanvas,
+			x : 10,
+			y : 192,
+			width : 66,
+			height : 24,
+			state : 'unable',
+			});
+	backButton.clickCallBack= function(){
+		//set new show condition
+		if(conditionList.canGoBack()){
+			conditionList.goBack();
+			//showCondition = conditionList.get();
+			eval('var j='+conditionList.get());
+			topPannel.set(j);
+			eval('json=' + conditionList.getResult());	
+			playStage=parseInt(j.stage,10)*10;
+			createNewDrip(json, theCanvas);
+			setInfoPannel(json.total);
+
+		}
+	}
+	backButton.unableDraw = function(){
+		this.ctx.drawImage(back_unable, this.x,this.y);
+	}
+	backButton.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(back_hover,this.x,this.y);
+		}else{
+			c.drawImage(back_enabled,this.x,this.y);
+		}
+	}
+
+	forwardButton = new RectangleButton({
+			id : 'forward',
+			canvas : theCanvas,
+			x : 95,
+			y : 192,
+			width : 66,
+			height : 24,
+			state : 'unable',
+			});
+	forwardButton.clickCallBack= function(){
+		//set new show condition
+		if(conditionList.canGoForward()){
+			conditionList.goForward();
+			//showCondition = conditionList.get();
+			eval('var j='+conditionList.get());
+			topPannel.set(j);
+			eval('json=' + conditionList.getResult());
+			playStage=parseInt(j.stage,10)*10;
+			createNewDrip(json, theCanvas);
+			setInfoPannel(json.total);
+		}
+	}
+	forwardButton.unableDraw = function(){
+		this.ctx.drawImage(forward_unable, this.x,this.y);
+	}
+	forwardButton.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(forward_hover,this.x,this.y);
+		}else{
+			c.drawImage(forward_enabled,this.x,this.y);
+		}
+	}
+
+	resetButton = new RectangleButton({
+			id : 'back',
+			canvas : theCanvas,
+			x : 10,
+			y : 292,
+			width : 60,
+			height : 33,
+			state : 'enable',
+			});
+	resetButton.clickCallBack= function(){
+		var condition="{\"stage\":1}";
+		eval("var conditionJSON="+condition);
+		topPannel.set(conditionJSON);
+	}
+	resetButton.unableDraw = function(){
+		this.ctx.drawImage(reset_Img, this.x,this.y);
+		this.ctx.fillStyle="rgba(00,00,00,0.8)";
+		this.ctx.fillRect(this.x,this.y,this.width,this.height);
+	}
+	resetButton.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(reset_Img,this.x,this.y);
+		}else{
+			c.drawImage(reset_Img,this.x,this.y);
+		}
+	}
+
+
+	faqButton = new RectangleButton({
+			id : 'back',
+			canvas : theCanvas,
+			x : 950,
+			y : 292,
+			width : 48,
+			height : 48,
+			state : 'enable',
+			});
+	faqButton.clickCallBack= function(){
+		window.open ('faq.html', 'newwindow');
+	}
+	faqButton.unableDraw = function(){
+		//
+	}
+	faqButton.enabledDraw = function(){
+		var c=this.ctx;
+		if(this.underMouse(mouse)){
+			c.drawImage(faq_Img,this.x,this.y);
+		}else{
+			c.drawImage(faq_Img,this.x,this.y);
+		}
+	}
+
+	var buttons=[b1_bottom,b2_top,b2_bottom,b3_top,b3_bottom,b4_top, b1_topright,
+		b2_topright, b3_topright, b4_topright, backButton, forwardButton, resetButton, faqButton ];
+	setButtonState();
+
+	function setButtonState(){
+		switch(playStage){
+			case STAGE_WEIBO:
+				b1_bottom.state='enabled';
+				b2_top.state='unable';
+				b2_bottom.state='unable';
+				b3_top.state='unable';
+				b3_bottom.state='unable';
+				b4_top.state='unable';
+				b1_topright.state='unable';
+				b2_topright.state='enabled';
+				b3_topright.state='enabled';
+				b4_topright.state='enabled';
+				break;
+			case STAGE_TAOBAO:
+				b1_bottom.state='unable';
+				b2_top.state='enabled';
+				b2_bottom.state='enabled';
+				b3_top.state='unable';
+				b3_bottom.state='unable';
+				b4_top.state='unable';
+				b1_topright.state='enabled';
+				b2_topright.state='unable';
+				b3_topright.state='enabled';
+				b4_topright.state='enabled';
+				break;
+			case STAGE_BUY:
+				b1_bottom.state='unable';
+				b2_top.state='unable';
+				b2_bottom.state='unable';
+				b3_top.state='enabled';
+				b3_bottom.state='enabled';
+				b4_top.state='unable';
+				b1_topright.state='enabled';
+				b2_topright.state='enabled';
+				b3_topright.state='unable';
+				b4_topright.state='enabled';
+				break;
+			case STAGE_SHARE:
+				b1_bottom.state='unable';
+				b2_top.state='unable';
+				b2_bottom.state='unable';
+				b3_top.state='unable';
+				b3_bottom.state='unable';
+				b4_top.state='enabled';
+				b1_topright.state='enabled';
+				b2_topright.state='enabled';
+				b3_topright.state='enabled';
+				b4_topright.state='unable';
+				break;
+		}
+		if(conditionList.canGoBack()){
+			backButton.state= 'enabled';
+		}else{
+			backButton.state= 'unable';
+		}
+		if(conditionList.canGoForward()){
+			forwardButton.state= 'enabled';
+		}else{
+			forwardButton.state= 'unable';
+		}
+
+		//reset
+		var condiArray=["{\"stage\":1}", "{\"stage\":2}","{\"stage\":3}","{\"stage\":4}"];
+		var canReset=true;
+		for(var i=condiArray.length-1; i>=0; i--){
+			if( condiArray[i] === showCondition ){
+				canReset = false;
+			}
+		}
+		if(canReset){
+			resetButton.state='enabled';
+		}else{
+			resetButton.state='unable';
+		}
+
+		//faq
+		faqButton.state='enabled';
+	}
+
+	function initApp() {
+		initLoadCount=0;
+		initItemsToLoad = 6;
+
+		enterImg =new Image();
+		enterImg.onload = initItemLoaded;
+		enterImg.src = "images/enter.png";
+
+		enterImg2 =new Image();
+		enterImg2.onload = initItemLoaded;
+		enterImg2.src = "images/enter2.png";
+
+		enterImg3 =new Image();
+		enterImg3.onload = initItemLoaded;
+		enterImg3.src = "images/enter3.png";
+
+		enterImg4 =new Image();
+		enterImg4.onload = initItemLoaded;
+		enterImg4.src = "images/enter4.png";
+
+		enterImg5 =new Image();
+		enterImg5.onload = initItemLoaded;
+		enterImg5.src = "images/enter5.png";
+
+		enterButtonImg =new Image();
+		enterButtonImg.onload = initItemLoaded;
+		enterButtonImg.src = "images/enterButton.png";	
+
+		appState='waiting';	
+	}
+
+	function initItemLoaded(event) {
+		initLoadCount++;
+		if (initLoadCount < initItemsToLoad) {
+			return;
+		}
+
+		loadCount=0;
+		itemsToLoad = 39;
+
+		bgImage = new Image();
+		bgImage.onload = itemLoaded;
+		bgImage.src = "images/background.png";
+
+		navi1Img = new Image();
+		navi1Img.onload = itemLoaded;
+		navi1Img.src = "images/navi1.png";
+
+		navi234Img = new Image();
+		navi234Img.onload = itemLoaded;
+		navi234Img.src = "images/navi234.png";
+
+		naviHoverImg = new Image();
+		naviHoverImg.onload = itemLoaded;
+		naviHoverImg.src = "images/navi_hover.png";
+
+		naviClickedImg = new Image();
+		naviClickedImg.onload = itemLoaded;
+		naviClickedImg.src = "images/navi_clicked.png";
+
+		naviBgImg = new Image();
+		naviBgImg.onload = itemLoaded;
+		naviBgImg.src = "images/navi_bg.png";
+
+		stage1_bottom = new Image();
+		stage1_bottom.onload = itemLoaded;
+		stage1_bottom.src = "images/stage1_bottom.png";
+
+		stage2_top = new Image();
+		stage2_top.onload = itemLoaded;
+		stage2_top.src = "images/stage2_top.png";
+
+		stage2_bottom = new Image();
+		stage2_bottom.onload = itemLoaded;
+		stage2_bottom.src = "images/stage2_bottom.png";
+
+		stage3_top = new Image();
+		stage3_top.onload = itemLoaded;
+		stage3_top.src = "images/stage3_top.png";
+
+		stage3_bottom = new Image();
+		stage3_bottom.onload = itemLoaded;
+		stage3_bottom.src = "images/stage3_bottom.png";
+
+		stage4_top = new Image();
+		stage4_top.onload = itemLoaded;
+		stage4_top.src = "images/stage4_top.png";
+
+		stage1_bottom_hover = new Image();
+		stage1_bottom_hover.onload = itemLoaded;
+		stage1_bottom_hover.src = "images/stage1_bottom_hover.png";
+
+		stage2_top_hover = new Image();
+		stage2_top_hover.onload = itemLoaded;
+		stage2_top_hover.src = "images/stage2_top_hover.png";
+
+		stage2_bottom_hover = new Image();
+		stage2_bottom_hover.onload = itemLoaded;
+		stage2_bottom_hover.src = "images/stage2_bottom_hover.png";
+
+		stage3_top_hover = new Image();
+		stage3_top_hover.onload = itemLoaded;
+		stage3_top_hover.src = "images/stage3_top_hover.png";
+
+		stage3_bottom_hover = new Image();
+		stage3_bottom_hover.onload = itemLoaded;
+		stage3_bottom_hover.src = "images/stage3_bottom_hover.png";
+
+		stage4_top_hover = new Image();
+		stage4_top_hover.onload = itemLoaded;
+		stage4_top_hover.src = "images/stage4_top_hover.png";
+
+		back_enabled = new Image();
+		back_enabled.onload = itemLoaded;
+		back_enabled.src = "images/back_enabled.jpg";
+
+		back_hover = new Image();
+		back_hover.onload = itemLoaded;
+		back_hover.src = "images/back_hover.jpg";
+
+		back_unable = new Image();
+		back_unable.onload = itemLoaded;
+		back_unable.src = "images/back_unable.jpg";
+
+		forward_enabled = new Image();
+		forward_enabled.onload = itemLoaded;
+		forward_enabled.src = "images/forward_enabled.jpg";
+
+		forward_hover = new Image();
+		forward_hover.onload = itemLoaded;
+		forward_hover.src = "images/forward_hover.jpg";
+
+		forward_unable = new Image();
+		forward_unable.onload = itemLoaded;
+		forward_unable.src = "images/forward_unable.jpg";
+
+		weibo_logo =new Image();
+		weibo_logo.onload = itemLoaded;
+		weibo_logo.src = "images/weibo_logo.png";
+
+		people_logo =new Image();
+		people_logo.onload = itemLoaded;
+		people_logo.src = "images/people_logo.png";
+
+		weiboTopleftImg =new Image();
+		weiboTopleftImg.onload = itemLoaded;
+		weiboTopleftImg.src = "images/weiboTopleft.png";
+
+		peopleTopleftImg =new Image();
+		peopleTopleftImg.onload = itemLoaded;
+		peopleTopleftImg.src = "images/peopleTopleft.png";
+		
+		male_light_Img = new Image();
+		male_light_Img.onload = itemLoaded;
+		male_light_Img.src = "images/male_light.png";
+		
+		male_dark_Img = new Image();
+		male_dark_Img.onload = itemLoaded;
+		male_dark_Img.src = "images/male_dark.png";
+
+		female_light_Img = new Image();
+		female_light_Img.onload = itemLoaded;
+		female_light_Img.src = "images/female_light.png";
+
+		female_dark_Img = new Image();
+		female_dark_Img.onload = itemLoaded;
+		female_dark_Img.src = "images/female_dark.png";
+
+		unknown_sex_light_Img = new Image();
+		unknown_sex_light_Img.onload = itemLoaded;
+		unknown_sex_light_Img.src = "images/unknown_sex_light.png";
+		
+		unknown_sex_dark_Img = new Image();
+		unknown_sex_dark_Img.onload = itemLoaded;
+		unknown_sex_dark_Img.src = "images/unknown_sex_dark.png";
+
+		male_hover_Img = new Image();
+		male_hover_Img.onload = itemLoaded;
+		male_hover_Img.src = "images/male_hover.png";
+
+		female_hover_Img = new Image();
+		female_hover_Img.onload = itemLoaded;
+		female_hover_Img.src = "images/female_hover.png";
+		
+		unknown_sex_hover_Img = new Image();
+		unknown_sex_hover_Img.onload = itemLoaded;
+		unknown_sex_hover_Img.src = "images/unknown_sex_hover.png";
+
+		reset_Img = new Image();
+		reset_Img.onload = itemLoaded;
+		reset_Img.src = "images/reset.png";
+
+		faq_Img = new Image();
+		faq_Img.onload = itemLoaded;
+		faq_Img.src = "images/faq.png";
+
+		appState = STATE_LOADING;
+
+	}
+
+	function itemLoaded(event) {
+		loadCount++;
+		if (loadCount < itemsToLoad) {
+			return;
+		}
+		//appState = STATE_RESET;
+	}
+
+	function loadApp(){
+		context.clearRect(0,0,theCanvas.width,theCanvas.height);
+		var img;
+		loadState=loadStateDetect(loadState);
+
+		switch(loadState) {
+			case LOAD_STATE1:
+				img=enterImg;
+				break;
+			case LOAD_STATE2:
+				img=enterImg2;
+				break;
+			case LOAD_STATE3:
+				img=enterImg3;
+				break;
+			case LOAD_STATE4:
+				img=enterImg4;
+				break;
+			case LOAD_STATE5:
+				img=enterImg5;
+				if(loadCount >= itemsToLoad){
+					enterButton.state = 'enabled';
+				}
+				break;
+		}
+		context.drawImage(img,0,0);
+		if(loadState === LOAD_STATE5 && loadCount >= itemsToLoad){
+			enterButton.draw();
+		}
+	}
+
+	var loadStateDetectInfo={
+		1000 : [[992,100,LOAD_STATE2],
+					  [1192,100,LOAD_STATE3],
+					  [1392,100,LOAD_STATE4],
+					  [1642,150,LOAD_STATE5]],
+		2000 : [[223,223,LOAD_STATE1],
+					  [1192,100,LOAD_STATE3],
+					  [1392,100,LOAD_STATE4],
+					  [1642,150,LOAD_STATE5]],
+		3000 : [[223,223,LOAD_STATE1],
+					  [546,100,LOAD_STATE2],
+					  [1392,100,LOAD_STATE4],
+					  [1642,150,LOAD_STATE5]],
+		4000 : [[223,223,LOAD_STATE1],
+					  [546,100,LOAD_STATE2],
+					  [746,100,LOAD_STATE3],
+					  [1642,150,LOAD_STATE5]],
+		5000 : [[223,223,LOAD_STATE1],
+					  [546,100,LOAD_STATE2],
+					  [746,100,LOAD_STATE3],
+					  [946,100,LOAD_STATE4]]
+	};
+
+	function loadStateDetect(state){
+		var data=loadStateDetectInfo[state];
+		var m=mouse;
+		for(var i=data.length-1; i>=0; i--){
+			if( Math.abs(m.x+m.y-data[i][0]) <= data[i][1] ){
+				return data[i][2];
+			}
+		}
+		return state;
+	};
+
+
+	enterButton = new RectangleButton({
+			id : 'Enter',
+			canvas : theCanvas,
+			x : 640,
+			y : 480,
+			width : 326,
+			height : 234,
+			state : 'unable',
+			});
+	enterButton.clickCallBack= function(){
+		appState = STATE_RESET;
+		this.state='unable';
+	}
+
+	enterButton.enabledDraw = function(){
+		var c= this.ctx;
+		c.drawImage(enterButtonImg,this.x,this.y);
+	}
+
+	function resetAPP(){
+		document.getElementById('floatBox').style.visibility='hidden';
+		appState=STATE_PLAYING;
+
+		eval('json='+showResult);
+		console.log(json);
+		console.log(json.split);
+
+		if(json.sum<=400){
+			for(var i=0; i<json.split.type.length; i++){
+				var t= json.split.type[i];
+				t.element = [];
+				for(var j=0; j<t.num; j++){
+					t.element[t.element.length]={content:"<a href='http://www.g.cn'>test<a>"};
+				}
+			}
+		}
+
+		playStage=Math.round(json.stage*10);//10,20,30,40;
+		createNewDrip(json, theCanvas);
+		setInfoPannel(json.total);
+	}
+
+
+
+	function run() {
+		switch(appState) {
+			case STATE_INIT:
+				initApp();
+				break;
+			case STATE_LOADING:
+				loadApp();
+				//wait for itemLoaded()
+				break;
+			case STATE_RESET:
+				resetAPP()
+				break;
+			case STATE_PLAYING:
+				playAPP();
+				break;
+		}
+	}
+
+	function playAPP(){
+		update();
+		switch(playStage){
+			case STAGE_WEIBO : 
+				if(playState === PLAY_NORMAL){
+					render();
+				}else{
+					amplify();
+				}
+				break;
+			case STAGE_TAOBAO :
+				if(playState === PLAY_NORMAL){
+					render();
+				}else{
+					amplify();
+				}
+				break;
+			case STAGE_BUY :
+				if(playState === PLAY_NORMAL){
+					render();
+				}else{
+					amplify();
+				}
+				break;
+			case STAGE_SHARE : 
+				if(playState === PLAY_NORMAL){
+					render();
+				}else{
+					amplify();
+				}
+				break;
+		}
+		UIRefresh();
+	}
+
+	function update(){
+		//calculate new velocity and location of balls and points
+		//frameCount++;
+		bigDrip.update();
+
+		//update waveQueue
+		if(conditionList.isAdding()){
+			waveQueue.enqueue({
+				x: bigDrip.x,
+				y: bigDrip.y,
+				r: bigDrip.r,
+				canvas: bigDrip.theCanvas,
+			});
+		}
+		waveQueue.clean();
+
+		//update bgImage position
+		destination=stagePosition[Math.floor(playStage/10)-1];
+		if(bgImagePosition.x !== destination.x || bgImagePosition.y !== destination.y){
+			//need move
+			var dy=destination.y-bgImagePosition.y;
+			var dx=destination.x-bgImagePosition.x;
+			if(stageMoveVelocity.x === 0 && stageMoveVelocity.y === 0
+				|| dy*stageMoveVelocity.y<0
+				|| dx*stageMoveVelocity.x<0
+				|| Math.round(stageMoveVelocity.x*dy - stageMoveVelocity.y*dx) !== 0
+				){
+				//start move
+				setStageMove(playStage);
+			}else{
+				//keep move
+				bgImagePosition.x+=stageMoveVelocity.x;
+				bgImagePosition.y+=stageMoveVelocity.y;
+				//end move
+				if(Math.abs(bgImagePosition.x-destination.x)<5 && Math.abs(bgImagePosition.y-destination.y)<5){
+					bgImagePosition.x=destination.x;
+					bgImagePosition.y=destination.y;
+					stageMoveVelocity={x:0,y:0};
+				}
+			}
+		}
+
+		setButtonState();
+		topPannel.setStage();
+	}
+
+	amplify = function(){
+		var frameCount=0;
+		var frameLast=Math.floor(1000/fps*2);
+		var percentageLast=0.95;
+		return function(){
+			if(frameCount ===0){
+				document.getElementById('floatBox').style.visibility='hidden';
+				var time=bigDrip.r/amplifyDrip.r;
+				if(time > 1.5) {time =1.5;}
+				frameLast=Math.floor(1000/fps*time);
+			}
+			frameCount++;
+			context.clearRect(0,0,theCanvas.width,theCanvas.height);
+			//color2Drip={};
+			drawBg();
+			bigDrip.amplifyDraw(amplifyDrip,percentageLast,frameCount/frameLast);
+			var ampRatio=1+(bigDrip.r*percentageLast/amplifyDrip.r-1)*frameCount/frameLast;
+			if(ampRatio >= 9){
+				frameCount = frameLast-1;
+			}
+
+			if(frameCount === frameLast -1){
+				frameCount=0;
+				playState=PLAY_NORMAL;
+
+				//if(bigDrip.info.count>200 && amplifyDrip.info.count <= 200){
+				if(bigDrip.info.count>200){
+					bigDrip.childToParent(amplifyDrip,percentageLast);
+					//ajax
+					sendAjax();
+					
+				}else{
+					bigDrip.childToParent(amplifyDrip,percentageLast);
+					showResult="{stage :"+Math.round(playStage/10)+", total :" + bigDrip.info.count + ", sum :" +bigDrip.info.count+"}";
+					conditionList.addResult(showResult);
+					setInfoPannel(bigDrip.info.count);
+				}
+									
+				amplifyDrip=undefined;
+			}
+		}
+	}();
+
+	function getShowCondition(){
+		var stageIndex=Math.round(playStage/10);
+		var str="{\"stage\":"+ stageIndex ;
+		var f=topPannel.filterCondition();
+		if(f !== ''){
+			str+=','+topPannel.filterCondition()+'}';
+		}else{
+			str+='}';
+		}
+		return str;
+	}
+
+	function getType(json,index){
+		if(dataSelectorType[json.split.name] !== 'tree'){
+			return  data[json.split.name][index].type;
+		}else{
+			var i=index;
+			var dataSplit=data[json.split.name];
+			for(var j=0; j<dataSplit.length; j++){
+				if(i>dataSplit[j].child.length-1){
+					i-=dataSplit[j].child.length;
+				}else{
+					return dataSplit[j].type +'-'+ dataSplit[j].child[i].type;
+				}
+			}
+		}
+	}
+
+	function createNewDrip(json, theCanvas){
+
+		if(typeof(bigDrip) !== 'undefined'){
+			bigDrip.refresh();
+		}else{
+		}
+		
+		//playStage = json.stage *10 ; //10,20,30,40
+
+		//new topDrip
+		var bigR=200;
+		var maxElement =200;
+		bigDrip=new Drip({
+			//	theCanvas: theCanvas,
+			//	ctx : context,
+				r:bigR*1.06,//json.total,
+				x:theCanvas.width/2,
+				y:theCanvas.height/2-70,
+				//name:"bigdrip",
+				info:{type: 'TOPDRIP', count : json.total},
+				//id: -1,
+				vx: Math.random()*150/40-150/80,
+				vy: Math.random()*150/40-150/80,
+				numP:144,
+				forceParam:0.007,
+				pXInitRatio : 1.1,
+				pYInitRatio : 1.1,
+				stage : json.stage
+			//	color: getNewColor()
+		});
+		bigDrip.setCanvas(theCanvas);
+		bigDrip.setElementR(Math.floor(bigR/Math.sqrt(maxElement*6)));
+		bigDrip.friction_factor = 0.85;
+
+		if(json.total === 0){
+			return;
+		}
+
+
+		maxElement=300000;
+		if(typeof(json.split) === 'undefined'){
+			if(typeof(json.element) !== 'undefined'){
+			//if(typeof(json.element) !== 'undefined' && json.total <=maxElement ){
+				var blink = (json.total > maxElement);
+				bigDrip.setElements(json.element, blink);
+			}
+		}else{
+			// create child drip and distribute
+			var splitType=json.split.type;
+			for(var i=0; i<splitType.length; i++){
+				splitType[i].idx=i;
+			}
+			splitType.sort(function(a,b){
+				if(a.num === b.num){
+					return 0;
+				}else if(a.num < b.num){
+					return 1;
+				}else{ 
+					return -1;
+				}
+			});
+
+			var initAngle=Math.PI*2*Math.random();
+
+			/*
+			if(splitType[0].num === 0){ return;}
+			var temp={};
+			temp.r=Math.sqrt(splitType[0].num/json.sum)*bigR;
+			temp.x=bigDrip.x+temp.r*Math.cos(initAngle);
+			temp.y=bigDrip.y+temp.r*Math.sin(initAngle);
+			//temp.name=data[json.split.name][splitType[0].idx].type;
+			temp.numP=36;
+			//temp.forceParam=forceParam;
+			temp.pXInitRatio=0.9;
+			temp.pYInitRatio=0.9;
+			var child=new Drip(temp);
+			bigDrip.child[bigDrip.child.length]=child;		
+			*/
+
+			var batch=1;
+			var batchCount=-1;
+			var addAngle=Math.PI;
+			//var len=splitType.length;
+			var len=0;
+			for(var i=0; i<splitType.length; i++){
+				if(splitType[i].num !== 0){
+					len++;
+				}else{
+					break;
+				}
+			}
+			for(var i=0; i<len; i++,batchCount++){
+				if(splitType[i].num ===0){break;}
+				if(batchCount === batch){
+					batchCount=0;
+					initAngle-=Math.PI/2/batch;
+					addAngle=Math.PI/batch;
+					if(batch>=2){
+						addAngle+=Math.PI;
+					}
+					batch*=2;
+				}
+				initAngle+=addAngle;
+				var temp={};
+				var ratioToSum=splitType[i].num/json.sum;
+				//prevent the drip is too small to see or cause the dirp to collapse
+				if(ratioToSum <0.005){
+					ratioToSum=0.005;
+				}
+				temp.r=Math.sqrt(ratioToSum)*bigR;
+				var tempDis=temp.r+0.1;
+				var addDis=temp.r/5 > 10 ? temp.r/5 : 10;
+				do{
+					temp.x=bigDrip.x+tempDis*Math.cos(initAngle);
+					temp.y=bigDrip.y+tempDis*Math.sin(initAngle);
+					tempDis+=addDis;
+				}while(bigDrip.collide(temp));
+				if(i>0){
+					do{	
+						tempDis-=2;
+						temp.x=bigDrip.x+tempDis*Math.cos(initAngle);
+						temp.y=bigDrip.y+tempDis*Math.sin(initAngle);
+					}while(! bigDrip.collide(temp));
+				}
+				tempDis+=2;
+				temp.x=bigDrip.x+tempDis*Math.cos(initAngle);
+				temp.y=bigDrip.y+tempDis*Math.sin(initAngle);
+				//temp.name=data[json.split.name][splitType[i].idx].type;
+				temp.info={
+					type : getType(json,splitType[i].idx),
+					split : json.split.name,
+					count : splitType[i].num,
+					percentage : splitType[i].num/json.total,	
+				}
+				temp.numP=36;
+				temp.pXInitRatio=0.9;
+				temp.pYInitRatio=0.9;
+				temp.stage = json.stage;
+				var child=new Drip(temp);
+				if(typeof(splitType[i].element) !== 'undefined' ){
+				//if(typeof(splitType[i].element) !== 'undefined' && json.total <= maxElement){
+					var blink = (json.total > maxElement);
+					child.setElements(splitType[i].element, blink);
+				}
+
+				bigDrip.child[bigDrip.child.length]=child;
+			}
+
+			// adjust distribute;	
+			if(len===1){
+				bigDrip.child[0].x=bigDrip.x;
+				bigDrip.child[0].y=bigDrip.y;
+				bigDrip.child[0].refreshShape();
+			}else if(len ===2){
+				var c1=bigDrip.child[0];
+				var c2=bigDrip.child[1];
+				if(c1.r+c2.r> bigDrip.r){
+					var newX=(c1.x*c1.r+c2.x*c2.r)/(c1.r+c2.r);
+					var newY=(c1.y*c1.r+c2.y*c2.r)/(c1.r+c2.r);
+					var deltaX=newX-bigDrip.x;
+					var deltaY=newY-bigDrip.y;
+					for(var i=0; i<len; i++){
+						bigDrip.child[i].x-=deltaX;
+						bigDrip.child[i].y-=deltaY;
+						bigDrip.child[i].refreshShape();
+					}
+					//adjust big R;
+				//	bigDrip.r=(c1.r+c2.r);
+				}
+				
+			}else if(2<len || len<5){
+				var minX=1000;
+				var maxX=-1000;
+				var minY=1000;
+				var maxY=-1000;
+				for(var i=0; i<len; i++){
+					var chd=bigDrip.child[i];
+					if(chd.x-chd.r<minX){minX=chd.x-chd.r;}
+					if(chd.x+chd.r>maxX){maxX=chd.x+chd.r;}
+					if(chd.y-chd.r<minY){minY=chd.y-chd.r;}
+					if(chd.y+chd.r>maxY){maxY=chd.y+chd.r;}
+				}
+				var deltaX=(minX+maxX)/2-bigDrip.x;
+				var deltaY=(minY+maxY)/2-bigDrip.y;
+				
+				for(var i=0; i<len; i++){
+					bigDrip.child[i].x-=deltaX;
+					bigDrip.child[i].y-=deltaY;
+					bigDrip.child[i].refreshShape();
+				}
+				
+				//adjust pX,pYinitRatio;
+				var maxr=0;
+				var bigX=bigDrip.x;
+				var bigY=bigDrip.y;
+				for(var i=0; i<len; i++){
+					var chd=bigDrip.child[i];
+					var dis=Math.sqrt(Math.pow(bigX-chd.x,2)+Math.pow(bigY-chd.y,2))+chd.r;
+					if(dis>maxr){maxr=dis;}
+				}
+				bigDrip.r=maxr/1.2;
+				bigDrip.pXInitRatio=1.2;//maxr/bigDrip.r+0.5;
+				bigDrip.pYInitRatio=1.2;//maxr/bigDrip.r+0.5;
+				bigDrip.refreshShape();
+			}
+		}
+	}
+
+	function render(){
+		context.clearRect(0,0,theCanvas.width,theCanvas.height);
+		//color2Drip={};
+		drawBg();
+		drawInfoPannel();
+
+		/*
+		var destination=stagePosition[Math.floor(playStage/10)-1];
+		if(bgImagePosition.x === destination.x || bgImagePosition.y === destination.y){
+			switch(playStage){
+				case STAGE_WEIBO:
+					context.drawImage(stage1BottomrightImg, 752, 498);
+					context.drawImage(arrowForwardImg,230,528);
+					break;
+				case STAGE_TAOBAO:
+					context.drawImage(stage2BottomrightImg, 752, 498);
+					context.drawImage(arrowForwardImg,230,528);
+					context.drawImage(arrowBackImg,740,95);
+					break;
+				case STAGE_BUY:
+					context.drawImage(stage3BottomrightImg, 752, 498);
+					context.drawImage(arrowForwardImg,230,528);
+					context.drawImage(arrowBackImg,740,95);
+					break;
+				case STAGE_SHARE:
+					context.drawImage(stage4BottomrightImg, 732, 478);
+					context.drawImage(arrowBackImg,740,95);
+					break;
+			}
+		
+		}
+		*/
+
+		context.drawImage(naviBgImg,977,15.5,naviBgImg.width,naviBgImg.height);
+		for(var i=0; i<buttons.length; i++){
+			buttons[i].draw();
+		}
+		bigDrip.draw();
+		waveQueue.draw();
+	}
+
+	function drawBg(){
+		context.drawImage(bgImage,bgImagePosition.x,bgImagePosition.y,theCanvas.width,theCanvas.height,0,0,theCanvas.width,theCanvas.height);
+
+	}
+
+	function getResultString(showCondition){
+		var showJSON;
+		eval('showJSON='+showCondition);
+		console.log(showJSON);
+		if(showJSON === {}){
+			return '{total :'+data.total+'}';
+		}
+		// get total
+		var count=data.total;
+		if(typeof(showJSON.filter) !== 'undefined' ){
+			var filter=showJSON.filter;
+			for(var item in filter){
+				switch(dataSelectorType[item]){
+					case 'selector':
+						count*=data[item][filter[item]].count/data.total;
+						break;
+					case 'table':
+						//same to selector
+						count*=data[item][filter[item]].count/data.total;
+						break;
+					case 'slider':
+						var items=filter[item];
+						var p=items.indexOf('_');
+						if(p === -1){
+							count*=data[item][filter[item]].count/data.total;
+						}else{
+							var tips=items.split('_');
+							var sum=0;
+							for(var i=tips[0]; i<=tips[1]; i++){
+								sum+=data[item][i].count;
+							}
+							count*=sum/data.total;
+						}
+						break;
+					case 'tree':
+						var items=filter[item];
+						var tips=items.split('_');
+						count*=data[item][tips[0]].child[tips[1]].count/data.total;
+						break;
+					}
+			}
+		}
+		count=Math.ceil(count);
+		if(typeof(showJSON.split) === 'undefined'){
+			return '{total :'+count+'}';
+		}
+
+		//get split
+		var result='';
+		result+='{total :'+count+", split : {name: '"+showJSON.split+"', type : [";
+		var spt=data[showJSON.split];
+		if(dataSelectorType[showJSON.split] !== 'tree'){
+			for(var i in spt){
+				result+='{num : '+Math.round(count*spt[i].count/data.total)+'},';
+			}
+		}else{
+			for(var i in spt){
+				for(var j in spt[i].child){
+					result+='{num : '+Math.round(count*spt[i].child[j].count/data.total)+'},';
+				}
+			}
+		}
+		result+=']}}';
+		return result;
+		
+	}
+
+
+	//create control pannel
+	var topPannel = new TopPannel({
+			ctx: context,
+			fixedx : 0,
+			fixedy : 768,
+			fixedOrien : 'BOTTOM_LEFT',
+			listDirection : 'vtcl',
+			width : 1024,
+			height : 60,
+			bgColor : '#fff'
+	});
+	topPannel.stage=STAGE_WEIBO;
+	topPannel.set =function(showCondition){
+		//topPannel.setStage();
+		//make sure every pannel canbe set Filter
+		//prevent recent pannnels are  less than next stage's pannels
+		//then some filters can not be set
+		topPannel.cleanChild();
+		if(showCondition.stage === STAGE_WEIBO){
+			topPannel.addChild(weiboPannel);
+		}else{
+			topPannel.addChild(weiboPannel);
+			topPannel.addChild(peoplePannel);
+		}
+		topPannel.setFilter(showCondition);
+		topPannel.stage=showCondition.stage;
+	};
+	topPannel.setStage = function(){
+		if(topPannel.stage === STAGE_WEIBO){
+			if(playStage !== STAGE_WEIBO){
+				peoplePannel.setFilter('{}');//clean
+				topPannel.addChild(peoplePannel);
+			}
+		}else{
+			if(playStage === STAGE_WEIBO){
+				topPannel.cleanChild();
+				topPannel.addChild(weiboPannel);
+			}
+		}
+		topPannel.stage = playStage;
+	};
+
+	//create small slide
+	var weiboPannel = new HorizonPannel({
+			ctx : context,
+			width : 1024,
+			height : 60,
+			bgColor : '#fff'
+			});
+	var weiboTitle= new HorizonPannel({
+			ctx : context,
+			width : 56,
+			height : 60,
+			bgColor : '#aa26e5'
+			});
+	weiboTitle.selfDraw = function(){
+		var c=this.ctx;
+		//this.drawBackground();
+
+		var w=this.width,h=this.height;
+		if(this.prnt){//not undefined
+			if(this.prnt.listDirection === 'hrzn'){
+				h=this.prnt.height;
+			}else{
+				w=this.prnt.width;
+			}
+		}
+
+		c.drawImage(weibo_logo, 4, -30);
+
+
+		if(h>60){
+			var tempC = tempContext;
+			tempC.drawImage(theCanvas, topPannel.x, topPannel.y+h-1, 56, theCanvas.height-topPannel.y-h+1, 0,0,56,theCanvas.height-topPannel.y-h+1);
+		//	tempC.drawImage(theCanvas, topPannel.x, topPannel.y+h, 56, 20, 0,0,56,20);
+
+			c.fillStyle="#544b68";
+			c.beginPath();
+			c.moveTo(24,30);
+			c.arc(34,40,10,Math.PI,1.5*Math.PI,false);
+			c.lineTo(w,30);
+			c.lineTo(w,330);
+			c.lineTo(34,330);
+			c.arc(34,320,10,Math.PI/2,Math.PI,false);
+			c.lineTo(24,10);
+			c.fill();
+			c.closePath();
+			
+			c.fillStyle = '#fff';
+			c.font = '14px 微软雅黑';
+			c.textBaseline = 'top';
+			c.fillText('含', 33, 37);
+			c.fillText('商', 33, 54);
+			c.fillText('品', 33, 71);
+			c.fillText('链', 33, 88);
+			c.fillText('接', 33, 105);
+			c.fillText('的', 33, 122);
+			c.fillText('微', 33, 139);
+			c.fillText('博', 33, 156);
+			c.fillText('的', 33, 173);
+			c.fillText('属', 33, 190);
+			c.fillText('性', 33, 207);
+
+			c.drawImage(tempCanvas, 0,0,56,theCanvas.height-topPannel.y-h+1, 0,h,56,theCanvas.height-topPannel.y-h+1);
+			//c.drawImage(tempCanvas, 0,0,56,20, 0,h,56,20);
+		}
+	}
+	weiboFilterLines = new VerticalPannel({
+			ctx : context,
+			width : 520,
+			height : 60,
+			bgColor : '#fff'
+	});
+
+	weiboFilterSingleLine1 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 50,
+			bgColor : '#70657f',
+			childColor : {
+					highlightColor : '#f86f61',
+					selectedFontColor : '#ffffff',
+					unSelectedFontColor : '#3f364f',
+					splitBgColor : '#926876',
+					moveOnBgColor : '#78667e',
+					filterTitleColor : '#00c2d4',
+				},
+		//	idx : 1,
+	});
+	weiboFilterSingleLine1.drawBackground = function(){
+					var c=this.ctx;
+					c.fillStyle = this.bgColor;
+					var w=this.width,h=this.height;
+					if(this.prnt){//not undefined
+						if(this.prnt.listDirection === 'hrzn'){
+							h=this.prnt.height;
+						}else{
+							w=this.prnt.width;
+						}
+					}
+					c.beginPath();
+					c.moveTo(w-10,0);
+					c.arc(w-10,10,10,1.5*Math.PI,2*Math.PI,false);
+					c.lineTo(w,h);
+					c.lineTo(0,h);
+					c.lineTo(0,10);
+					c.arc(10,10,10,Math.PI,1.5*Math.PI,false);
+					c.lineTo(w-10,0);
+					c.fill();
+					c.closePath();
+				}
+
+	weiboFilterSingleLine2 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 50,
+			bgColor : '#7e7487',
+			childColor : {
+					highlightColor : '#f86f61',
+					selectedFontColor : '#ffffff',
+					unSelectedFontColor : '#3f364f',
+					splitBgColor : '#926876',
+					moveOnBgColor : '#78667e',
+					filterTitleColor : '#00c2d4',
+				},
+		//	idx : 2,
+
+	});
+
+	var peoplePannel = new HorizonPannel({
+			ctx : context,
+			width : 600,
+			height : 60,
+			bgColor : '#8ac6e5'
+			});
+	var peopleTitle= new HorizonPannel({
+			ctx : context,
+			width : 56,
+			height : 60,
+			bgColor : '#aa76e5'
+			});
+	peopleTitle.selfDraw = function(){
+		var c=this.ctx;
+		//this.drawBackground();
+
+		var w=this.width,h=this.height;
+		if(this.prnt){//not undefined
+			if(this.prnt.listDirection === 'hrzn'){
+				h=this.prnt.height;
+			}else{
+				w=this.prnt.width;
+			}
+		}
+		//c.clearRect(0,0,w,h);
+
+		c.drawImage(people_logo, 4, -30);
+
+		if(h>60){
+			c.fillStyle="#a7d3e0";
+			c.beginPath();
+			c.moveTo(24,30);
+			c.arc(34,40,10,Math.PI,1.5*Math.PI,false);
+			c.lineTo(w,30);
+			c.lineTo(w,330);
+			c.lineTo(34,330);
+			c.arc(34,320,10,Math.PI/2,Math.PI,false);
+			c.lineTo(24,10);
+			c.fill();
+			c.closePath();
+			
+			c.fillStyle = '#70657f';
+			c.font = '14px 微软雅黑';
+			c.textBaseline = 'top';
+			/*
+			c.fillText('用', 33, 37);
+			c.fillText('户', 33, 54);
+			c.fillText('属', 33, 71);
+			c.fillText('性', 33, 88);
+			*/
+
+			c.fillText('点', 33, 37);
+			c.fillText('击', 33, 54);
+			c.fillText('微', 33, 71);
+			c.fillText('博', 33, 88);
+			c.fillText('链', 33, 105);
+			c.fillText('接', 33, 122);
+			c.fillText('的', 33, 139);
+			c.fillText('用', 33, 156);
+			c.fillText('户', 33, 173);
+			c.fillText('的', 33, 190);;
+			c.fillText('属', 33, 207);
+			c.fillText('性', 33, 224);
+		}
+	}
+	peopleFilterLines = new VerticalPannel({
+			ctx : context,
+			width : 520,
+			height : 60,
+			bgColor : '#dac6e5'
+	});	
+	peopleFilterSingleLine1 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 30,
+			bgColor : '#CDEAEC',
+			childColor : {
+					highlightColor : '#f86f61',
+					selectedFontColor : '#70657f',
+					unSelectedFontColor : '#75bcc9',
+					splitBgColor : '#ebf6f8',
+					moveOnBgColor : '#d1edee',
+					filterTitleColor : '#00c2d4',
+				},
+		//	idx : 3,
+
+	});
+	peopleFilterSingleLine2 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 30,
+			bgColor : '#B7E1E5',
+			childColor : {
+					highlightColor : '#f86f61',
+					selectedFontColor : '#70657f',
+					unSelectedFontColor : '#75bcc9',
+					splitBgColor : '#ebf6f8',
+					moveOnBgColor : '#d1edee',
+					filterTitleColor : '#00c2d4',
+				},
+		//	idx : 4,
+	});
+
+	slider1=new SliderSelectorPannel({
+		id : '链接点击量',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('链接点击量'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	list1= new ListSelectorPannel({
+		id : '博主身份',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 25,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		//itemHeight : 30,
+		bgColor : '#840',
+		child :  getSelectorItems('博主身份'),
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false
+	});	
+
+	slider2=new SliderSelectorPannel({
+		id : '博主影响力',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('博主影响力'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	slider3=new SliderSelectorPannel({
+		id : '日发微博数',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('日发微博数'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	slider4=new SliderSelectorPannel({
+		id : '点击时间',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 195,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('点击时间'),
+		//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	slider5=new SliderSelectorPannel({
+		id : '商品价格档次',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('商品价格档次'),
+		//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	tree1 = new TreeSelectorPannel({
+		id : '商品类目',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		//child : [{name: '服装', child: ['女装','男装']},{name: '玩具', child: ['small','big']},{name: '电子产品', child: ['高档','低档']}],//[child1,child2]
+		child :  getSelectorItems('商品类目'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		leftWidth :74,
+		centerWidth :30,
+	//	leftItemHeight :22.5,
+	//	rightItemHeight :20.3,
+	//	rightTop: 0,
+		selectedIndex1 : -1,
+		selectedIndex2 : -1,
+	//	underMouseIndex1 :-1,
+	});	
+
+	slider6=new SliderSelectorPannel({
+		id : '店铺级别',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('店铺级别'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	slider7=new SliderSelectorPannel({
+		id : '商品需求度',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 185,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('商品需求度'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	list2= new ListSelectorPannel({
+		id : '性别',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 95,
+		height : 25,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		//itemHeight : 30,
+		bgColor : '#840',
+		child :  getSelectorItems('性别'),
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false
+	});	
+
+	slider8=new SliderSelectorPannel({
+		id : '年龄',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 125,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('年龄'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});
+
+	table1 = new TableSelectorPannel({
+		id : '星座',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 125,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,		bgColor : '#4e8',
+		child :  getSelectorItems('星座'),
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+	//	itemHeight : 30,
+	//	itemWidth : 70,
+		col : 2
+	});
+
+	table2 = new TableSelectorPannel({
+		id : '地域',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 215,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('地域'),
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+	//	itemHeight : 30,
+	//	itemWidth : 70,
+		col : 4
+	});
+
+
+
+	slider9 = new SliderSelectorPannel({
+		id : '淘宝买家级别',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 188,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('淘宝买家级别'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});
+	slider10 = new SliderSelectorPannel({
+		id : '淘宝消费能力',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 188,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('淘宝消费能力'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});
+
+	table3 = new TableSelectorPannel({
+		id : '淘宝用户标签',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 188,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('淘宝用户标签'),
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+	//	itemHeight : 30,
+	//	itemWidth : 70,
+		col : 3
+	});
+
+	table4 = new TableSelectorPannel({
+		id : '微博用户标签',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 188,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child : getSelectorItems('微博用户标签'),//[child1,child2]
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+	//	itemHeight : 30,
+	//	itemWidth : 70,
+		col : 2
+	});
+
+	slider11 = new SliderSelectorPannel({
+		id : '微博影响力',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 188,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('微博影响力'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});
+
+	slider12 = new SliderSelectorPannel({
+		id : '成交转化率',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 235,
+		height : 30,
+		splitWidth : 17,
+		maxHeight : 300,
+		titleHeight : 30,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child :  getSelectorItems('成交转化率'),
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 24, 
+ 		//itemHeight : 30, 
+		//top : 0,
+		//bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});
+
+	slider2.drawItem = starTextToImage;
+	slider11.drawItem= starTextToImage;
+		
+function starTextToImage(text,x,y){
+		var c=this.ctx;
+		switch(text){
+			case '五星':
+				drawStars(c,x,y+this.itemHeight/4,this.itemHeight/2,5);
+				break;
+			case '四星':
+				drawStars(c,x,y+this.itemHeight/4,this.itemHeight/2,4);
+				break;
+			case '三星':
+				drawStars(c,x,y+this.itemHeight/4,this.itemHeight/2,3);
+				break;
+			case '两星':
+				drawStars(c,x,y+this.itemHeight/4,this.itemHeight/2,2);
+				break;
+			case '一星':
+				drawStars(c,x,y+this.itemHeight/4,this.itemHeight/2,1);
+				break;
+		}
+	}
+
+function drawStars(c,x,y,h,num){
+	for(var i=0; i<num; i++){
+		drawSingleStar(c,x+h/2+i*h, y+h/2, h/2.5);
+	}
+}
+function drawSingleStar(c,x,y,r){
+	c.beginPath();
+	var startAngle=1.5*Math.PI;
+	c.moveTo(x+r*Math.cos(startAngle),y+r*Math.sin(startAngle));
+	var angleNum=5;
+	var deltaAngle=2*Math.PI*2/angleNum;
+	var angle=startAngle;
+	for(var i=1;i<angleNum;i++){
+		angle-=deltaAngle;
+		c.lineTo(x+r*Math.cos(angle),y+r*Math.sin(angle));
+	}
+	c.closePath();
+	//c.fillStyle='#f00';
+	c.fill();
+}
+	
+	list2.drawItem = function(text,x,y){
+		var c=this.ctx;
+		var img_light,img_dark,img_hover;
+		switch(text){
+			case '男':
+				img_light=male_light_Img;
+				img_dark=male_dark_Img;	
+				img_hover=male_hover_Img;	
+				break;
+			case '女':
+				img_light=female_light_Img;	
+				img_dark=female_dark_Img;
+				img_hover=female_hover_Img;	
+				break;
+			case '未知':
+				img_light = unknown_sex_light_Img;
+				img_dark = unknown_sex_dark_Img;
+				img_hover=unknown_sex_hover_Img;	
+				break;
+		}
+		
+		if(c.fillStyle === this.prnt.childColor.selectedFontColor){
+			c.drawImage(img_light,x,y-img_light.height/2);
+		}else if(c.fillStyle === this.prnt.childColor.unSelectedFontColor){
+			c.drawImage(img_dark,x,y-img_dark.height/2); 
+		}else{
+			c.drawImage(img_hover,x,y-img_hover.height/2);
+		}
+
+	}
+
+
+
+function getSelectorItems(idx){
+	//var obj={};
+	//obj.id=idx;
+	//obj.child=[];
+	var childArray=[];
+
+	var sData=data[idx];
+	if(dataSelectorType[idx] !== 'tree'){
+		var child=[];
+		for(var i=0; i<sData.length; i++){
+			child[child.length]=sData[i].type;
+		}
+		childArray=child;
+	}else{
+/*
+		'所属类目' : [
+		{type : '虚拟票务', child : [
+			{type : '手机号码业务'},
+			{type : '网游周边业务'},
+			{type : '网游点卡'},
+			{type : '话费充值'},
+			]},
+		]
+		child : [{name: '服装', child: ['女装','男装']},{name: '玩具', child: ['small','big']},{name: '电子产品', child: ['高档','低档']}],//[child1,child2]
+*/
+		var child=[];
+		for(var i=0; i<sData.length; i++){
+			var trunk=sData[i];
+			var branch=trunk.child;
+			var item={};
+			item.name=trunk.type;
+			item.child=[];
+			var itemChild=item.child;
+			for(var j=0; j<branch.length; j++){
+				itemChild[itemChild.length]=branch[j].type;
+			}
+			child[child.length]=item;
+		}
+		childArray=child;
+	}
+	return childArray;
+}
+
+
+	topPannel.addChild(weiboPannel);
+	//topPannel.addChild(peoplePannel);
+	weiboPannel.addChild(weiboTitle);
+	peoplePannel.addChild(peopleTitle);
+	weiboPannel.addChild(weiboFilterLines);
+	peoplePannel.addChild(peopleFilterLines);
+	weiboFilterLines.addChild(weiboFilterSingleLine1);
+	weiboFilterLines.addChild(weiboFilterSingleLine2);
+	peopleFilterLines.addChild(peopleFilterSingleLine1);
+	peopleFilterLines.addChild(peopleFilterSingleLine2);
+
+	weiboFilterSingleLine1.addChild(slider1);//链接点击量
+	weiboFilterSingleLine1.addChild(list1);//博主身份
+	weiboFilterSingleLine1.addChild(slider2);//博主影响力
+	weiboFilterSingleLine1.addChild(slider3);//日发微博数
+	weiboFilterSingleLine2.addChild(slider5);//商品价格档次
+	weiboFilterSingleLine2.addChild(tree1);//商品类目
+	weiboFilterSingleLine2.addChild(slider6);//店铺级别	
+	weiboFilterSingleLine2.addChild(slider12);//成交转化率
+
+	peopleFilterSingleLine1.addChild(list2);//性别
+	peopleFilterSingleLine1.addChild(slider8);//年龄
+	peopleFilterSingleLine1.addChild(table1);//星座
+	peopleFilterSingleLine1.addChild(table2);//地域
+	peopleFilterSingleLine1.addChild(slider7);//商品需求度
+	peopleFilterSingleLine1.addChild(slider4);//点击时间
+
+	//weiboFilterSingleLine2.addChild(slider7);//商品需求度
+	//weiboFilterSingleLine1.addChild(slider4);//点击时间
+
+	peopleFilterSingleLine2.addChild(slider9);//淘宝买家级别
+	peopleFilterSingleLine2.addChild(slider10);//淘宝消费能力
+	peopleFilterSingleLine2.addChild(table3);//淘宝用户标签
+	peopleFilterSingleLine2.addChild(table4);//微博用户标签
+	peopleFilterSingleLine2.addChild(slider11);//微博影响力
+
+
+
+
+	eval('var initialShowCondition=' +showCondition);
+	topPannel.set(initialShowCondition);
+	console.log('initial filter:'+topPannel.filterCondition());
+	console.log('initial filter2:'+getShowCondition());
+
+	function eventMouseMove(event) {
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		if(typeof(topPannel) !== 'undefined' && topPannel.underMouse(mouse)){
+		}else{
+			if(playState !== PLAY_AMPLIFY){
+				if(typeof(bigDrip) !== 'undefined'){
+					bigDrip.mouseMoveActor(mouse);
+					//bigDrip.detectDripShake(mouse);
+				}
+			}
+		}
+	}
+
+	function eventMouseClick(event) {
+		//var mouse={};
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		switch(appState){
+			case STATE_LOADING:
+				if(enterButton.underMouse(mouse)){
+					enterButton.clickActor();
+				}
+				break;
+			case STATE_PLAYING:
+				if(topPannel.underMouse(mouse)){
+					topPannel.topClickActor(mouse);
+				}else{
+					if(playState !== PLAY_AMPLIFY){
+						for(var i=0; i<buttons.length; i++){
+							if(buttons[i].state === 'enabled' && buttons[i].underMouse(mouse)){
+								buttons[i].clickActor();
+								break;
+							}
+						}	
+						amplifyDrip=bigDrip.mouseClickActor(mouse);
+						if( typeof(amplifyDrip) !== 'undefined'){
+							playState = PLAY_AMPLIFY;
+							console.log('click amplify1 : '+getShowCondition());
+							topPannel.splitToFilter(amplifyDrip);
+							showCondition=getShowCondition();
+							console.log('click amplify2 : '+showCondition);
+							conditionList.addCondition(showCondition);
+						}
+					}
+				}
+				break;
+		}
+	}
+	function eventMouseUp(event) {
+		//var mouse={};
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		if(topPannel.underMouse(mouse)){
+			topPannel.topMouseUpActor(mouse);
+		}
+	}
+	function eventMouseDown(event) {
+		//var mouse={};
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		if(topPannel.underMouse(mouse)){
+			topPannel.topMouseDownActor(mouse);
+		}
+	}
+	
+	theCanvas.addEventListener("click",eventMouseClick, false);
+	theCanvas.addEventListener("mouseup",eventMouseUp, false);
+	theCanvas.addEventListener("mousedown",eventMouseDown, false);		
+	theCanvas.addEventListener("mousemove",eventMouseMove, false);	
+
+	setInterval(function(){
+		run();
+		setMouseCursor();
+
+	}, 1000/fps);
+
+	function setMouseCursor(){
+		document.body.style.cursor = 'default';
+		if( typeof(bigDrip) !== 'undefined' &&
+			( typeof(bigDrip.childDripUnderMouse) !== 'undefined'
+				|| typeof(bigDrip.elementUnderMouse) !== 'undefined' )){
+			// drip can be clicked
+			document.body.style.cursor = 'pointer';
+			//document.body.style.dripCursor = 'default';
+		}else if(document.body.style.topPannelCursor === 'pointer'){
+			//topPannel can be clicked
+			document.body.style.cursor = 'pointer';
+			document.body.style.topPannelCursor = 'default';
+		}else{
+			//button can be clicked
+			var mouseOnButton=false;
+			switch(appState){
+				case STATE_LOADING:
+					if(enterButton.underMouse(mouse)){
+						mouseOnButton= true;
+					}
+					break;
+				case STATE_PLAYING:
+					if(topPannel.underMouse(mouse)){
+						document.body.style.cursor = 'default';
+						//topPannel.topClickActor(mouse);
+					}else{
+						if(playState !== PLAY_AMPLIFY){
+							for(var i=0; i<buttons.length; i++){
+								if(buttons[i].state === 'enabled' && buttons[i].underMouse(mouse)){
+									mouseOnButton = true;
+									break;
+								}
+							}
+						}else{
+							document.body.style.cursor = 'default';
+						}
+					}
+					break;
+			}
+			if(mouseOnButton === true){
+				document.body.style.cursor = 'pointer';
+			}
+		}
+	}
+
+	function UIRefresh(){
+		//context.clearRect(0,0,theCanvas.width,theCanvas.height);
+		topPannel.topMouseMoveActor(mouse);
+		topPannel.refreshPos();
+		topPannel.topDraw();
+		showCondition=getShowCondition();
+		if(showCondition !== conditionList.get()){
+			console.log(showCondition);
+			console.log(conditionList.get());
+			conditionList.addCondition(showCondition);
+			//oldShowCondition=showCondition;
+		//	console.log(showCondition);
+			//var s=getResultString(showCondition);
+			//console.log(s);
+
+			//ajax
+			sendAjax();
+
+		}		
+	}
+
+	function updatePage(){
+		if(xmlHttp.readyState === 4){
+			if(xmlHttp.status === 200){
+				showResult = xmlHttp.responseText;
+				//showResult.setHeader("Cache-Control", "no-cache");
+				//showResult.setContentType("text/json;charset=gb2312");							
+				console.log(showResult);
+				conditionList.addResult(showResult);
+				appState = STATE_RESET;
+			}
+		}
+	}
+
+	function sendAjax(){
+			xmlHttp.abort();
+//			var url = "http://10.232.36.109:8081/LangTaoJin/edit?timeStamp=" + new Date().getTime();
+			var url = "http://localhost/drip/response.php?timeStamp=" + new Date().getTime();
+			xmlHttp.open("POST", url, true);
+			xmlHttp.onreadystatechange = updatePage;
+			xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+			console.log('send: '+getShowCondition());
+			xmlHttp.send('showCondition='+getShowCondition());
+			//xmlHttp.send(getShowCondition());
+	}
+
+
+	function setInfoPannel(total){
+		if(playStage === STAGE_WEIBO){
+			numText=total;//+'条微博';
+			var ratio=Math.round(total/weiboSum*10000)/100;
+			if(ratio > 0 && ratio <0.01){
+				ratio=0.01;
+			}
+			ratioText=ratio.toString().slice(0,4)+'%';
+		}else{
+			numText=total;//+'个点击者';
+			var ratio=Math.round(total/peopleSum*10000)/100;
+			if(ratio > 0 && ratio <0.01){
+				ratio=0.01;
+			}
+			ratioText=ratio.toString().slice(0,4)+'%';
+		}
+	}
+
+	function drawInfoPannel(){
+		context.textAlign = 'center';
+		context.fillStyle='#f86f61';
+		context.textBaseLine= 'bottom';
+		if(playStage === STAGE_WEIBO){
+			context.drawImage(weiboTopleftImg,10,10);
+			context.font='18px 微软雅黑';
+			context.fillText('符合查询条件',88,40);
+			context.fillText('的微博数：',88,60);
+			context.font='24px 微软雅黑';
+			context.fillText(numText+'条',88,95);
+			context.font='40px 微软雅黑';
+			context.fillText(ratioText,88,150);
+			context.font='10px 微软雅黑';
+			context.fillStyle= '#786787';
+			context.fillText('占链接被点击的总微博数的比例',88,160);
+		}else{
+			context.drawImage(peopleTopleftImg,10,10);
+			context.font='18px 微软雅黑';
+			context.fillText('符合查询条件',88,40);
+			context.fillText('的人数：',88,60);
+			context.font='24px 微软雅黑';
+			context.fillText(numText+'人',88,95);
+			context.font='40px 微软雅黑';
+			context.fillText(ratioText,88,150);
+			context.font='10px 微软雅黑';
+			context.fillStyle= '#786787';
+			context.fillText('占点击淘宝链接的总人数的比例',88,160);
+		}
+		context.textAlign = 'left';
+	}
+			
+}
+
+		</script>
+	</body>
+</html>

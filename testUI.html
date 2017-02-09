@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2313">
+		<title>drip</title>
+		<style>
+			body, html {
+				margin:0;
+				padding:0;
+				font-family:Arial;
+			}
+		</style>
+	</head>
+	<body>
+		<div width=100% background="red">
+		
+		</div>
+		<div style="position: absolute; top: 50px; left: 50px; background-color:gray;">
+		<canvas id="canvasOne" width="600" height="600">
+		 Your browser does not support the HTML 5 Canvas. 
+		</canvas>
+		</div>	
+		<div id="info">color</div>
+
+		<script type="text/javascript"  src="ui.js"></script>		
+		<script type="text/javascript">
+window.addEventListener('load', eventWindowLoaded, false);	
+function eventWindowLoaded() {
+	//get canvas
+	var theCanvas = document.getElementById("canvasOne");
+	var context = theCanvas.getContext("2d");
+	var mouse={x:-1000,y:-1000};
+
+
+	//create control pannel
+	var topPannel = new TopPannel({
+			ctx: context,
+			fixedx : 0,
+			fixedy : 600,
+			fixedOrien : 'BOTTOM_LEFT',
+			listDirection : 'vtcl',
+			width : 600,
+			height : 200,
+			bgColor : '#3ac6e5'
+			});
+	//create small slide
+	var weiboPannel = new HorizonPannel({
+			ctx : context,
+			width : 580,
+			height : 100,
+			bgColor : '#7ac6e5'
+			});
+
+	var peoplePannel = new HorizonPannel({
+			ctx : context,
+			width : 600,
+			height : 100,
+			bgColor : '#8ac6e5'
+			});
+
+	var weiboTitle= new HorizonPannel({
+			ctx : context,
+			width : 50,
+			height : 100,
+			bgColor : '#aa26e5'
+			});
+	weiboTitle.selfDraw = function(){
+		var c=this.ctx;
+		//c.fillStyle = '#aa26e5';
+		//c.fillRect(0, 0, this.width, this.height);
+		this.drawBackground();
+		c.fillStyle = '#f00';
+		c.font = 'italic bold 20px sans-serif';
+		c.textBaseline = 'bottom';
+		c.translate(10,10);
+		c.rotate(Math.PI/2);
+		c.fillText('微博', 0, 0);	
+		c.rotate(-Math.PI/2);
+		c.translate(-10,-10);
+	}
+
+	var peopleTitle= new HorizonPannel({
+			ctx : context,
+			width : 50,
+			height : 100,
+			bgColor : '#aa76e5'
+			});
+	peopleTitle.selfDraw = function(){
+		var c=this.ctx;
+		//c.fillStyle = '#aa76e5';
+		//c.fillRect(0, 0, this.width, this.height);
+		this.drawBackground();
+		c.fillStyle = '#f80';
+		c.font = 'italic bold 20px sans-serif';
+		c.textBaseline = 'bottom';
+		c.translate(10,10);
+		c.rotate(Math.PI/2);
+		c.fillText('用户', 0, 0);	
+		c.rotate(-Math.PI/2);
+		c.translate(-10,-10);
+	};
+
+	//var clickRate = new VerticalPannel(
+			
+	weiboFilterLines = new VerticalPannel({
+			ctx : context,
+			width : 520,
+			height : 100,
+			bgColor : '#dac6e5'
+	});
+
+	weiboFilterSingleLine1 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 50,
+			bgColor : '#da86e5'
+	});
+
+	weiboFilterSingleLine2 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 50,
+			bgColor : '#da46e5'
+	});
+
+
+	peopleFilterLines = new VerticalPannel({
+			ctx : context,
+			width : 520,
+			height : 100,
+			bgColor : '#fa0000'
+	});
+
+	peopleFilterSingleLine1 = new FilterSingleLine({
+			ctx : context,
+			width : 510,
+			height : 80,
+			bgColor : '#fa4000'
+	});
+
+
+	s1= new ListSelectorPannel({
+		id : 'selector1',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 200,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,
+		itemHeight : 30,
+		bgColor : '#840',
+		child : [1,2,3],//[child1,child2]
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false
+	});	
+
+	s2=new ListSelectorPannel({
+		id : 'selector2',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 200,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,
+		itemHeight : 30,
+		bgColor : '#448',
+		child : [4,5,6],//[child1,child2]
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false
+	});
+
+	s3=new ListSelectorPannel({
+		id : 'selector3',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 200,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,
+		itemHeight : 30,
+		bgColor : '#4e8',
+		child : [7,8,9],//[child1,child2]
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false
+	});
+
+	t1=new TableSelectorPannel({
+		id : 'selector4',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 260,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,		bgColor : '#4e8',
+		child : [10,11,12,13,14,15,16,17],//[child1,child2]
+		selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		itemHeight : 30,
+		itemWidth : 70,
+		col : 3
+	});
+	
+	slider1=new SliderSelectorPannel({
+		id : 'selector5',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 200,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,		bgColor : '#4e8',
+		child : [18,19,20],//[child1,child2]
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 50, 
+ 		itemHeight : 30, 
+		top : 0,
+		bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	slider2=new SliderSelectorPannel({
+		id : 'selector6',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 200,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child : [21,22,23],//[child1,child2]
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 50, 
+ 		itemHeight : 30, 
+		top : 0,
+		bottom : 2,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	slider3=new SliderSelectorPannel({
+		id : 'selector7',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 200,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child : [24,25,26,27],//[child1,child2]
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		barWidth : 50, 
+ 		itemHeight : 22.5, 
+		top : 0,
+		bottom : 3,
+		barState : 'stop',
+		movingLevel : -1
+	});	
+
+	tree1=new TreeSelectorPannel({
+		id : 'selector8',
+		ctx : context,
+		state : 'folded',  // folded, unfolded, folding, unfolding
+		x : 0,
+		y : 0,
+		width : 260,
+		height : 50,
+		splitWidth : 60,
+		maxHeight : 170,
+		titleHeight : 50,
+		allSelectHeight : 30,
+		bgColor : '#4e8',
+		child : [{name: 'class1', child: [28,29,30]},{name: 'class2', child: [31,32,33]},{name: 'class3', child: [34,35,36,37,38]},{name: 'class4', child: [39]}],//[child1,child2]
+	//	selectedIndex : 0,
+		allSelected : true, //false
+		mouseOn : false,
+
+		leftWidth :80,
+		centerWidth :40,
+		leftItemHeight :22.5,
+		rightItemHeight :20.3,
+	//	rightTop: 0,
+		selectedIndex1 : -1,
+		selectedIndex2 : -1,
+		classIndexUnderMouse :-1,
+	});	
+
+	weiboTitle.selfClickActor= showClick('微博');
+	peopleTitle.selfClickActor = showClick('用户');
+	weiboPannel.selfClickActor = showClick('weiboPannel');
+	peoplePannel.selfClickActor = showClick('peoplePannel');
+	topPannel.selfClickActor = showClick('topPannel');
+	weiboFilterLines.selfClickActor = showClick('weibolines');
+	weiboFilterSingleLine1.selfClickActor = showClick('weiboline1');
+	weiboFilterSingleLine2.selfClickActor = showClick('weiboline2');
+	peopleFilterLines.selfClickActor = showClick('peoplelines');
+	peopleFilterSingleLine1.selfClickActor = showClick('peopleline1');
+
+
+	function showClick(content){
+		return function(){
+			var c=this.ctx;
+			c.fillStyle = '#fff';
+			c.fillRect(0,100,200,200);
+			c.fillStyle = '#f00';
+			c.font = 'italic bold 20px sans-serif';
+			c.textBaseline = 'top';
+			c.fillText(content, 0, 200);
+		};
+	}
+
+//	peopleFilterLines.selfMouseMoveActor = showMouseMove('peoplelines');
+//	peopleFilterSingleLine1.selfMouseMoveActor = showMouseMove('peopleline1');
+
+
+	function showMouseMove(content){
+		return function(){
+			var c=this.ctx;
+			c.fillStyle = '#fff';
+			c.fillRect(0,100,200,200);
+			c.fillStyle = '#ff0';
+			c.font = 'italic bold 20px sans-serif';
+			c.textBaseline = 'top';
+			c.fillText(content, 0, 200);
+		};
+	}
+
+
+	
+	topPannel.addChild(weiboPannel);
+	topPannel.addChild(peoplePannel);
+	weiboPannel.addChild(weiboTitle);
+	peoplePannel.addChild(peopleTitle);
+	weiboPannel.addChild(weiboFilterLines);
+	peoplePannel.addChild(peopleFilterLines);
+	weiboFilterLines.addChild(weiboFilterSingleLine1);
+	weiboFilterLines.addChild(weiboFilterSingleLine2);
+	peopleFilterLines.addChild(peopleFilterSingleLine1);
+	weiboFilterSingleLine1.addChild(s1);
+	//weiboFilterSingleLine1.addChild(s2);
+	weiboFilterSingleLine1.addChild(slider3);
+	weiboFilterSingleLine2.addChild(s3);
+	weiboFilterSingleLine2.addChild(t1);
+	peopleFilterSingleLine1.addChild(slider1);
+	//peopleFilterSingleLine1.addChild(slider2);
+	peopleFilterSingleLine1.addChild(tree1);
+
+
+
+//	topPannel.refreshPos();
+//	topPannel.topDraw();
+
+	function eventMouseClick(event) {
+		var mouse={};
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		topPannel.topClickActor(mouse);
+	}
+	function eventMouseUp(event) {
+		var mouse={};
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		topPannel.topMouseUpActor(mouse);
+	}
+	function eventMouseDown(event) {
+		var mouse={};
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+		topPannel.topMouseDownActor(mouse);
+	}
+	function eventMouseMove(event) {
+		if ( event.layerX || event.layerX == 0) { // Firefox
+			mouse.x = event.layerX ;
+			mouse.y = event.layerY;
+		} else if (event.offsetX || event.offsetX == 0) { // Opera
+			mouse.x = event.offsetX;
+			mouse.y = event.offsetY;
+		}
+	}
+	theCanvas.addEventListener("click",eventMouseClick, false);
+	theCanvas.addEventListener("mouseup",eventMouseUp, false);
+	theCanvas.addEventListener("mousedown",eventMouseDown, false);		
+	theCanvas.addEventListener("mousemove",eventMouseMove, false);	
+
+	setInterval(function(){
+				context.clearRect(0,0,theCanvas.width,theCanvas.height);
+				topPannel.topMouseMoveActor(mouse);
+				topPannel.refreshPos();
+				topPannel.topDraw();
+				context.fillText(topPannel.filterCondition(),50,100);
+			}, 33);
+
+}
+		</script>
+	</body>
+</html>	

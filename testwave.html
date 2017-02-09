@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=gb2313">
+		<title>drip</title>
+		<style>
+			body, html {
+				margin:0;
+				padding:0;
+				font-family:Arial;
+			}
+		</style>
+	</head>
+	<body>
+		<div width=100% background="red">
+		
+		</div>
+		<div style="position: absolute; top: 50px; left: 50px; background-color:gray;">
+		<canvas id="canvasOne" width="600" height="600">
+		 Your browser does not support the HTML 5 Canvas. 
+		</canvas>
+		</div>	
+		<div id="info">color</div>
+
+		<script type="text/javascript"  src="wave.js"></script>		
+		<script type="text/javascript">
+window.addEventListener('load', eventWindowLoaded, false);	
+function eventWindowLoaded() {
+	//get canvas
+	var theCanvas = document.getElementById("canvasOne");
+	var context = theCanvas.getContext("2d");
+
+	context.fillStyle='#888';
+	context.fillRect(0,0, theCanvas.width, theCanvas.height);
+
+	var waveQueue = new WaveQueue();
+	var config={
+		x : 300,
+		y : 300,
+		r : 250,
+		canvas : theCanvas
+	}
+
+
+	//var w=getRandomWave(config);
+	waveQueue.enqueue(config);
+
+	setInterval(function(){
+				context.clearRect(0,0,theCanvas.width,theCanvas.height);
+				context.fillStyle='#888';
+				context.fillRect(0,0, theCanvas.width, theCanvas.height);
+				waveQueue.enqueue(config);
+				waveQueue.clean();
+				waveQueue.draw();
+			}, 33);
+
+}
+		</script>
+	</body>
+</html>	
